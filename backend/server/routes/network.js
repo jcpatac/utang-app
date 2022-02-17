@@ -1,5 +1,5 @@
-import { User, Network, Transaction } from '../../models';
 import { Router } from 'express';
+import { User, Network, Transaction } from '../../models';
 
 let router = Router();
 
@@ -26,7 +26,7 @@ router.post('/create', async (req, res, next) => {
             };
 			let newNetwork = await Network.create(network);
             await newNetwork.addUsers(payload.users);
-            newNetwork.addTransactions(payload.transactions);
+            await newNetwork.addTransactions(payload.transactions);
 			res.status(201).json(newNetwork);
 		}
 	} catch (error) {
@@ -127,8 +127,8 @@ router.get('/:network_id/users', async (req, res, next) => {
 /* list a networks's transactions */
 router.get('/:network_id/transactions', async (req, res, next) => {
 	/**
-	 * This endpoint that returns the transactions of a user
-	 * Returns networks
+	 * This endpoint returns the transactions of a network
+	 * Returns transactions
 	 */
 
 	let transactions = await Transaction.findAll({

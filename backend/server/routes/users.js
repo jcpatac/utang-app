@@ -1,6 +1,6 @@
-import { User, Network, Transaction } from '../../models';
-import { Router } from 'express';
 import { Op } from 'sequelize';
+import { Router } from 'express';
+import { User, Network, Transaction } from '../../models';
 
 let router = Router();
 

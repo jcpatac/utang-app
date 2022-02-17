@@ -48,15 +48,15 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
-		date: DataTypes.DATE,
 		is_resolved: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        resolution_date: DataTypes.DATE,
+        date: DataTypes.DATE,
         sender_id: DataTypes.INTEGER,
+        network_id: DataTypes.INTEGER,
         receiver_id: DataTypes.INTEGER,
-        network_id: DataTypes.INTEGER
+        resolution_date: DataTypes.DATE,
 	}, {
 		sequelize,
 		modelName: 'Transaction',

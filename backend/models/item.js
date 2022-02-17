@@ -32,10 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 0.0
         },
-        transaction_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        }
+        transaction_id: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Item',

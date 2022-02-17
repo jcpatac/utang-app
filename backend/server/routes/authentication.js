@@ -1,8 +1,8 @@
-import { User } from '../../models';
-import { Router } from 'express';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import { Router } from 'express';
+import { User } from '../../models';
 
 let router = Router();
 dotenv.config();

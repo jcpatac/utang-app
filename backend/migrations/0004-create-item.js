@@ -31,7 +31,6 @@ module.exports = {
             'Items',
             'transaction_id',
             {
-                allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'Transactions',

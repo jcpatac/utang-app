@@ -1,25 +1,27 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import express from 'express';
-import { join } from 'path';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
 import cors from 'cors';
+import { join } from 'path';
+import logger from 'morgan';
+import express from 'express';
 import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 
-import indexRouter from './routes/authentication';
+/* Routes */
+import itemRouter from './routes/item';
 import usersRouter from './routes/users';
 import networkRouter from './routes/network';
+import indexRouter from './routes/authentication';
 import transactionRouter from './routes/transaction';
 
-var app = express();
+let app = express();
 
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, '../public')));
 
 // middleware
@@ -39,6 +41,7 @@ const authenticate = () => {
 }
 
 app.use('/', indexRouter);
+app.use('/items', authenticate(), itemRouter);
 app.use('/users', authenticate(), usersRouter);
 app.use('/networks', authenticate(), networkRouter);
 app.use('/transactions', authenticate(), transactionRouter);
