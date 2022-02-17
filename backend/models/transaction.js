@@ -58,6 +58,39 @@ module.exports = (sequelize, DataTypes) => {
         receiver_id: DataTypes.INTEGER,
         resolution_date: DataTypes.DATE,
 	}, {
+        hooks: {
+            afterCreate: (transaction, options) => {
+                /**
+                 * TODO: refactor usage of hook
+                 * TODO: transfer email creation and sending to some file
+                 * should be a new model to also cater notification
+                 * TODO: change 'to' email to the email of the sender
+                 * email is sent to my account for testing purposes
+                 */
+                try {
+                    const sgMail = require('@sendgrid/mail');
+                    const dotenv = require('dotenv');
+                    dotenv.config();
+                    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                    let message = {
+                        to: 'social.caesar.patac@gmail.com',
+                        from: 'utang.application@gmail.com',
+                        subject: transaction.transaction_name,
+                        html: '<p>You have a new transaction. Please check UtAp notifications.</p>',
+                    };
+                    sgMail.send(message).then(() => {
+                        console.log('Success!')
+                    }, error => {
+                        console.error(error);
+                        if (error.response) {
+                            console.error(error.response.body);
+                        }
+                    });
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        },
 		sequelize,
 		modelName: 'Transaction',
 	});
