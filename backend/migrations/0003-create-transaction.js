@@ -92,6 +92,6 @@ module.exports = {
             'Transactions',
             'sender_id'
         );
-         await queryInterface.dropTable('Transactions');
+        await queryInterface.dropTable('Transactions');
     }
 };

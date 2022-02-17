@@ -27,8 +27,29 @@ module.exports = {
                 type: Sequelize.DATE
             }
         });
+
+        await queryInterface.createTable('UserNetworks', {
+            // User belongsToMany Network
+            createdAt: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            updatedAt: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            user_id: {
+                type: Sequelize.INTEGER,
+                primaryKey: true
+            },
+            network_id: {
+                type: Sequelize.INTEGER,
+                primaryKey: true
+            },
+        });
     },
     async down(queryInterface, Sequelize) {
+        await queryInterface.dropTable('UserNetworks');
         await queryInterface.dropTable('Networks');
     }
 };
