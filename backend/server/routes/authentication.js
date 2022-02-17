@@ -24,7 +24,7 @@ router.post('/register', async (req, res, next) => {
 		});
 		if (existingUser) {
             res.status(409).json({
-                error: "Email already exists!"
+                message: "Email already exists!"
             });
 		} else {
             let salt = await bcrypt.genSalt(10);
@@ -39,7 +39,8 @@ router.post('/register', async (req, res, next) => {
 		}
 	} catch (error) {
 		res.status(400).json({
-			error: "Something went wrong!"
+            error: error,
+			message: "Something went wrong!"
 		})
 	}
 });
@@ -75,17 +76,19 @@ router.post('/login', async (req, res, next) => {
 				});
 			} catch (error) {
 				res.status(400).json({
-					error: "Something went wrong!"
+                    error: error,
+					message: "Something went wrong!"
 				});
 			}
         } else {
             res.status(401).json({
-				error: "Incorrect Password!"
+                error: error,
+				message: "Incorrect Password!"
 			});
         }
     } else {
         res.status(404).json({
-			error : "User not found!"
+			message : "User not found!"
 		});
     }
 });

@@ -11,38 +11,45 @@ router.get('/', async (req, res, next) => {
 	 * Returns users
 	 */
 
-	let users;
-	let attr = ['id', 'first_name', 'last_name', 'email'];
-	if (req.query.keyword != undefined && req.query.keyword != '') {
-		users = await User.findAll({
-			attributes: attr,
-			where: {
-				[Op.not]: {
-					id: req.user.id
-				},
-				[Op.or]: {
-					first_name: {
-						[Op.substring]: req.query.keyword
+	try {
+		let users;
+		let attr = ['id', 'first_name', 'last_name', 'email'];
+		if (req.query.keyword != undefined && req.query.keyword != '') {
+			users = await User.findAll({
+				attributes: attr,
+				where: {
+					[Op.not]: {
+						id: req.user.id
 					},
-					last_name: {
-						[Op.substring]: req.query.keyword
-					}
-				},
-				is_active: true
-			}
-		});
-	} else {
-		users = await User.findAll({
-			attributes: attr,
-			where: {
-				[Op.not]: {
-					id: req.user.id
-				},
-				is_active: true
-			}
-		});
+					[Op.or]: {
+						first_name: {
+							[Op.substring]: req.query.keyword
+						},
+						last_name: {
+							[Op.substring]: req.query.keyword
+						}
+					},
+					is_active: true
+				}
+			});
+		} else {
+			users = await User.findAll({
+				attributes: attr,
+				where: {
+					[Op.not]: {
+						id: req.user.id
+					},
+					is_active: true
+				}
+			});
+		}
+		res.json(users);
+	} catch (error) {
+		res.status(400).json({
+			error: error,
+			message: "Something went wrong!"
+		})
 	}
-	res.json(users);
 });
 
 // currently logged in user

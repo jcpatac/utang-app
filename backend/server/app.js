@@ -10,6 +10,7 @@ import jwt from 'jsonwebtoken';
 
 import indexRouter from './routes/authentication';
 import usersRouter from './routes/users';
+import networkRouter from './routes/network';
 
 var app = express();
 
@@ -38,5 +39,6 @@ const authenticate = () => {
 
 app.use('/', indexRouter);
 app.use('/users', authenticate(), usersRouter);
+app.use('/network', authenticate(), networkRouter);
 
 export default app;

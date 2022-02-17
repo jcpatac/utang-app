@@ -18,12 +18,12 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 			Network.belongsToMany(models.User, {
-				as: 'members',
-				through: 'UserNetwork',
+				as: 'users',
+				through: 'UserNetworks',
 				foreignKey: 'network_id'
 			});
 			Network.hasMany(models.Transaction, {
-				as: 'network_transactions',
+				as: 'transactions',
 				foreignKey: 'network_id'
 			});
 		}
