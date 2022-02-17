@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
 	class Network extends Model {
 		/**
 		 * Network Model
-		 * Represents the Networks of a User
+		 * Represents the Networks of Users
 		 * Fields:
 		 * 		- network_name	--- the name of the network
 		 * 		- is_active		--- determines if network is active
@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 		 * 		- users			--- the members of the network
 		 * 		- transactions	--- the transactions of a network
 		 */
-
 		static associate(models) {
 			// define association here
 			Network.belongsToMany(models.User, {

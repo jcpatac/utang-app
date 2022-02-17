@@ -13,11 +13,6 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING
             },
-            amount: {
-                allowNull: false,
-                defaultValue: 0.0,
-                type: Sequelize.DECIMAL
-            },
             date: {
                 allowNull: true,
                 type: Sequelize.DATE

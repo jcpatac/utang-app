@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
          *      - network_id        --- Network FK
          * 
          * Associations:
-         *      - sender            --- the User sending the payment
-         *      - receiver          --- the User receiving the payment
-         *      - network           --- the Network that the transaction belongs to
+         *      - sender            --- User sending the payment
+         *      - receiver          --- User receiving the payment
+         *      - network           --- Network that the transaction belongs
+         *      - items             --- Items in a transaction
          */
 		static associate(models) {
 			// define association here
@@ -35,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'network',
                 foreignKey: 'network_id'
             });
+            Transaction.hasMany(models.Item, {
+                as: 'items',
+                foreignKey: 'transaction_id',
+                allowNull: false
+            });
 		}
 	}
 	Transaction.init({
@@ -42,11 +48,6 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false
 		},
-		amount: {
-            type: DataTypes.DECIMAL,
-            allowNull: false,
-            defaultValue: 0.0
-        },
 		date: DataTypes.DATE,
 		is_resolved: {
             type: DataTypes.BOOLEAN,
@@ -56,7 +57,6 @@ module.exports = (sequelize, DataTypes) => {
         sender_id: DataTypes.INTEGER,
         receiver_id: DataTypes.INTEGER,
         network_id: DataTypes.INTEGER
-        
 	}, {
 		sequelize,
 		modelName: 'Transaction',
