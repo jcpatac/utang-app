@@ -28,7 +28,11 @@
     "prod": "NODE_ENV=production npm-run-all build server",
     "transpile": "babel ./server --out-dir dist-server",
     "clean": "rimraf dist-server",
-    "watch:dev": "nodemon"
+    "watch:dev": "nodemon",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles",
+    "pretest": "cross-env NODE_ENV=test npm run db:reset",
+    "db:create:test": "cross-env NODE_ENV=test npx sequelize-cli db:migrate",
+    "db:reset": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
   },
   "babel": {
     "presets": [
@@ -57,6 +61,9 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
-    "sequelize-cli": "^6.4.1"
+    "cross-env": "^7.0.3",
+    "jest": "^27.5.1",
+    "sequelize-cli": "^6.4.1",
+    "supertest": "^6.2.2"
   }
 }

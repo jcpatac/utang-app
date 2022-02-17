@@ -76,7 +76,6 @@ router.post('/:network_id/delete', async(req, res, next) => {
 	 */
 
     try {
-        let payload = req.body;
         let network = await Network.findOne({
 			where: {
 				id: req.params.network_id
@@ -105,7 +104,6 @@ router.get('/:network_id/users', async (req, res, next) => {
 	 * Returns networks
 	 */
 
-    let payload = req.body;
     let networks = await Network.findOne({
         attributes: ['id', 'network_name'],
         where: {

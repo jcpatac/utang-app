@@ -40,7 +40,7 @@ router.post('/create', async (req, res, next) => {
 /* update an item */
 router.post('/:item_id/update', async (req, res, next) => {
 	/**
-	 * This endpoint handles the creation of a transactions
+	 * This endpoint handles the creation of an item
 	 */
 
 	try {
@@ -52,7 +52,7 @@ router.post('/:item_id/update', async (req, res, next) => {
 		});
 		if (!item) {
             res.status(404).json({
-                message: "Transaction not found!"
+                message: "Item not found!"
             });
 		} else {
 			let updateFields = {
