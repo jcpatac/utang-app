@@ -7,12 +7,12 @@ module.exports = (sequelize, DataTypes) => {
 		 * Network Model
 		 * Represents the Networks of a User
 		 * Fields:
-		 * 		- network_name			--- the name of the network
-		 * 		- is_active				--- determines if network is active
+		 * 		- network_name	--- the name of the network
+		 * 		- is_active		--- determines if network is active
 		 * 
 		 * Associations:
-		 * 		- members				--- the members of the network
-		 * 		- network_transactions	--- the transactions of a network
+		 * 		- users			--- the members of the network
+		 * 		- transactions	--- the transactions of a network
 		 */
 
 		static associate(models) {

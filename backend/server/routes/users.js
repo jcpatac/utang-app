@@ -1,4 +1,4 @@
-import { User } from '../../models';
+import { User, Network, Transaction } from '../../models';
 import { Router } from 'express';
 import { Op } from 'sequelize';
 
@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-// currently logged in user
+/* currently logged in user */
 router.get('/me', async (req, res, next) => {
 	/**
 	 * This endpoint handles fetching of current user
@@ -66,6 +66,49 @@ router.get('/me', async (req, res, next) => {
 		}
 	});
 	res.json(user);
+});
+
+/* list a user's networks */
+router.get('/:user_id/networks', async (req, res, next) => {
+	/**
+	 * This endpoint that returns the network of a user
+	 * Returns networks
+	 */
+
+    let networks = await Network.findAll({
+        where: {
+            is_active: true
+        },
+        include: [{
+            model: User,
+            as: 'users',
+            attributes: ['id'],
+            where: {
+                id: req.params.user_id
+            },
+            required: true
+        }]
+    });
+	res.json(networks);
+});
+
+/* list a user's transactions */
+router.get('/:user_id/transactions', async (req, res, next) => {
+	/**
+	 * This endpoint that returns the transactions of a user
+	 * Returns networks
+	 */
+
+	let userId = req.params.user_id;
+	let transactions = await Transaction.findAll({
+        where: {
+			[Op.or]: {
+				sender_id: userId,
+				receiver_id: userId
+			}
+		}
+    });
+	res.json(transactions);
 });
 
 export default router;

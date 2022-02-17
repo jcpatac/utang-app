@@ -1,57 +1,7 @@
-import { Network, User } from '../../models';
+import { User, Network, Transaction } from '../../models';
 import { Router } from 'express';
 
 let router = Router();
-
-/* list a user's networks */
-router.get('/', async (req, res, next) => {
-	/**
-	 * This endpoint that returns the network of a user
-	 * Returns networks
-	 */
-
-    let networks = await Network.findAll({
-        where: {
-            is_active: true
-        },
-        include: [{
-            model: User,
-            as: 'users',
-            attributes: ['id'],
-            where: {
-                id: req.user.id
-            },
-            required: true
-        }]
-    });
-	res.json(networks);
-});
-
-/* list network users */
-router.get('/users', async (req, res, next) => {
-	/**
-	 * This endpoint that returns the network of a user
-	 * Returns networks
-	 */
-
-    let payload = req.body;
-    let networks = await Network.findOne({
-        attributes: ['id', 'network_name'],
-        where: {
-            id: payload.network_id
-        },
-        include: [{
-            model: User,
-            as: 'users',
-            attributes: ['id', 'first_name', 'last_name', 'email'],
-            through: {
-                attributes: []
-            },
-            required: true
-        }]
-    });
-	res.json(networks);
-});
 
 /* create a network */
 router.post('/create', async (req, res, next) => {
@@ -76,7 +26,7 @@ router.post('/create', async (req, res, next) => {
             };
 			let newNetwork = await Network.create(network);
             await newNetwork.addUsers(payload.users);
-            // newNetwork.addTransactions(payload.transactions);
+            newNetwork.addTransactions(payload.transactions);
 			res.status(201).json(newNetwork);
 		}
 	} catch (error) {
@@ -88,7 +38,7 @@ router.post('/create', async (req, res, next) => {
 });
 
 /* add users to a network */
-router.post('/add-users', async(req, res, next) => {
+router.post('/:network_id/add-users', async(req, res, next) => {
     /**
 	 * This endpoint handles adding of users to a network
 	 * Returns network
@@ -100,12 +50,11 @@ router.post('/add-users', async(req, res, next) => {
         let payload = req.body;
         let network = await Network.findOne({
 			where: {
-				id: payload.network_id
+				id: req.params.network_id
 			}
 		});
         if (network) {
             await network.addUsers(payload.users);
-            console.log(await network.getUsers());
             res.status(200).json(network);
         }
     } catch (error) {
@@ -117,7 +66,7 @@ router.post('/add-users', async(req, res, next) => {
 });
 
 /* delete a network */
-router.post('/delete', async(req, res, next) => {
+router.post('/:network_id/delete', async(req, res, next) => {
     /**
 	 * This endpoint handles deleting of a network
 	 * Returns message
@@ -130,7 +79,7 @@ router.post('/delete', async(req, res, next) => {
         let payload = req.body;
         let network = await Network.findOne({
 			where: {
-				id: payload.network_id
+				id: req.params.network_id
 			}
 		});
         if (network) {
@@ -147,6 +96,47 @@ router.post('/delete', async(req, res, next) => {
             message: 'Something went wrong!'
         });
     }
+});
+
+/* list network users */
+router.get('/:network_id/users', async (req, res, next) => {
+	/**
+	 * This endpoint that returns the network of a user
+	 * Returns networks
+	 */
+
+    let payload = req.body;
+    let networks = await Network.findOne({
+        attributes: ['id', 'network_name'],
+        where: {
+            id: req.params.network_id
+        },
+        include: [{
+            model: User,
+            as: 'users',
+            attributes: ['id', 'first_name', 'last_name', 'email'],
+            through: {
+                attributes: []
+            },
+            required: true
+        }]
+    });
+	res.json(networks);
+});
+
+/* list a networks's transactions */
+router.get('/:network_id/transactions', async (req, res, next) => {
+	/**
+	 * This endpoint that returns the transactions of a user
+	 * Returns networks
+	 */
+
+	let transactions = await Transaction.findAll({
+        where: {
+			network_id: req.params.network_id
+		}
+    });
+	res.json(transactions);
 });
 
 export default router;

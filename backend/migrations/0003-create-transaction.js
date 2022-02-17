@@ -9,6 +9,10 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
+            transaction_name: {
+                allowNull: false,
+                type: Sequelize.STRING
+            },
             amount: {
                 allowNull: false,
                 defaultValue: 0.0,
@@ -25,8 +29,8 @@ module.exports = {
             resolution_date: {
                 allowNull: true,
                 type: Sequelize.DATE
-            }
-,            createdAt: {
+            },
+            createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
             },

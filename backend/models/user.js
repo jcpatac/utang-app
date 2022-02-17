@@ -7,28 +7,27 @@ module.exports = (sequelize, DataTypes) => {
 		 * User Model
 		 * Represents a User object
 		 * Fields:
-		 * 		- first_name				--- the first name of the user
-		 * 		- last_name					--- the last name of the user
-		 * 		- email						--- the email of the user
-		 * 		- password					--- the password of the user
-		 * 		- is_active					--- determines if user is active
+		 * 		- first_name			--- the first name of the user
+		 * 		- last_name				--- the last name of the user
+		 * 		- email					--- the email of the user
+		 * 		- password				--- the password of the user
+		* 		- is_active				--- determines if user is active
 		 * 
 		 * Associations:
-		 * 		- transactions_as_sender	--- transaction as sender
-		 * 		- transactions_as_receiver	--- transaction as receiver
-		 * 		- user_networks				--- the networks of a user
+		 * 		- sender_transactions	--- transaction as sender
+		 * 		- receiver_transactions	--- transaction as receiver
+		 * 		- networks				--- the networks of a user
 		 */
 		static associate(models) {
 			// define association here
 			User.hasMany(models.Transaction, {
-				as: 'transactions',
-				foreignKey: 'sender_id',
+				as: 'sender_transactions',
+				foreignKey: 'sender_id'
+			});
+			User.hasMany(models.Transaction, {
+				as: 'receiver_transactions',
 				foreignKey: 'receiver_id'
 			});
-			// User.hasMany(models.Transaction, {
-			// 	as: 'transactions',
-			// 	foreignKey: 'receiver_id'
-			// });
 			User.belongsToMany(models.Network, {
 				as: 'networks',
 				through: 'UserNetworks',
