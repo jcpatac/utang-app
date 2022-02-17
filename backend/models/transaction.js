@@ -1,33 +1,33 @@
 'use strict';
 
-/**
- * Transaction Model
- * Represents a Transaction object
- * Fields:
- * 		- amount	        --- the amount of transaction
- * 		- date		        --- the date of the transaction
- * 		- is_resolved	    --- if the transaction is resolved or not
- * 		- resolution_date	--- the date of resolution
- * 
- * Associations:
- *      - sender            --- the User sending the payment
- *      - receiver          --- the User receiving the payment
- */
-
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 	class Transaction extends Model {
 		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
+         * Transaction Model
+         * Represents a Transaction object
+         * Fields:
+         * 		- amount	        --- the amount of transaction
+         * 		- date		        --- the date of the transaction
+         * 		- is_resolved	    --- if the transaction is resolved or not
+         * 		- resolution_date	--- the date of resolution
+         *      - sender_id         --- sender FK
+         *      - receiver_id       --- User FK
+         *      - network_id        --- Network FK
+         * 
+         * Associations:
+         *      - sender            --- the User sending the payment
+         *      - receiver          --- the User receiving the payment
+         *      - network_group     --- the Network that the transaction belongs to
+         */
 		static associate(models) {
 			// define association here
             Transaction.belongsTo(models.User, {
+                as: 'sender',
                 foreignKey: 'sender_id'
             });
             Transaction.belongsTo(models.User, {
+                as: 'receiver',
                 foreignKey: 'receiver_id'
             });
             Transaction.belongsTo(models.Network, {

@@ -6,8 +6,9 @@ import { join } from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
 
-// import indexRouter from './routes/index';
+import indexRouter from './routes/authentication';
 import usersRouter from './routes/users';
 
 var app = express();
@@ -19,7 +20,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, '../public')));
 
-// app.use('/', indexRouter);
-app.use('/', usersRouter);
+// middleware
+const authenticate = () => {
+    return (req, res, next) => {
+        try {
+            let token = req.headers.authorization;
+            let decoded = jwt.verify(token, process.env.SECRET);
+            req.user = decoded;
+            next();
+        } catch (err) {
+            res.status(401).json({
+                error: "Could not Authenticate!"
+            });
+        }
+    }
+}
+
+app.use('/', indexRouter);
+app.use('/users', authenticate(), usersRouter);
 
 export default app;
