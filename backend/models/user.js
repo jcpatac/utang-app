@@ -26,8 +26,12 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
 			User.hasMany(models.Transaction, {
-				as: 'user_transactions',
-				foreignKey: 'user_id'
+				as: 'transactions_as_sender',
+				foreignKey: 'sender_id'
+			});
+			User.hasMany(models.Transaction, {
+				as: 'transactions_as_receiver',
+				foreignKey: 'receiver_id'
 			});
 			User.belongsToMany(models.Network, {
 				as: 'user_networks',

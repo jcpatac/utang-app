@@ -25,12 +25,10 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			// define association here
             Transaction.belongsTo(models.User, {
-                as: 'sender',
-                foreignKey: 'user_id'
+                foreignKey: 'sender_id'
             });
             Transaction.belongsTo(models.User, {
-                as: 'receiver',
-                foreignKey: 'user_id'
+                foreignKey: 'receiver_id'
             });
             Transaction.belongsTo(models.Network, {
                 as: 'network_group',
@@ -49,7 +47,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        resolution_date: DataTypes.DATE
+        resolution_date: DataTypes.DATE,
+        sender_id: DataTypes.INTEGER,
+        receiver_id: DataTypes.INTEGER,
+        network_id: DataTypes.INTEGER
+        
 	}, {
 		sequelize,
 		modelName: 'Transaction',
