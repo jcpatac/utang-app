@@ -2,27 +2,15 @@
 
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Users', {
+        await queryInterface.createTable('Networks', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            first_name: {
+            network_name: {
                 allowNull: false,
-                type: Sequelize.STRING
-            },
-            last_name: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            email: {
-                allowNull: false,
-                type: Sequelize.STRING
-            },
-            password: {
-                allowNull: true,
                 type: Sequelize.STRING
             },
             is_active: {
@@ -41,6 +29,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Users');
+        await queryInterface.dropTable('Networks');
     }
 };
