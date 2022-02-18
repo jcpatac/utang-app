@@ -25,3 +25,7 @@ An application that easily logs a user's transaction with other users. The ultim
 **Frontend** (todo)
 - Tech Stack
    - ReactJS
+
+**Third Party API**
+- [SendGrid](https://github.com/sendgrid/sendgrid-nodejs/tree/main/packages/mail)
+- Sends an email to the sender of the new transaction
