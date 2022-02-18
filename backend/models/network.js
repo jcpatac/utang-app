@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 		 * 		- network_name	--- the name of the network
 		 * 		- is_active		--- determines if network is active
 		 * 
-		 * Associations:
+		 * Associations:a
 		 * 		- users			--- the members of the network
 		 * 		- transactions	--- the transactions of a network
 		 */
