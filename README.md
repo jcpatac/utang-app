@@ -20,7 +20,11 @@ An application that easily logs a user's transaction with other users. The ultim
    - Transaction - belongsTo User (One to Many); belongsTo Network (One to Many)
    - Network - belongsToMany User (Many to Many); hasMany Transactions (One to Many)
    - Item - belongsTo Transaction (One to Many)
-- The current backend is composed of simple endpoints capable of creating, reading, updating, and deleting objects.
+- Authentication
+   - JWT
+- Database
+   - SQLite
+- The current backend is composed of endpoints capable of creating, reading, updating, and deleting objects.
 
 **Frontend** (todo)
 - Tech Stack
