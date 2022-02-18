@@ -27,6 +27,7 @@ app.use(express.static(join(__dirname, '../public')));
 /**
  * Simple Middleware
  * TODO: move to one module
+ * TODO: improve jwt token implementation
  */
 const authenticate = () => {
     return (req, res, next) => {
