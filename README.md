@@ -25,6 +25,120 @@ An application that easily logs a user's transaction with other users. The ultim
 - Database
    - SQLite
 - The current backend is composed of endpoints capable of creating, reading, updating, and deleting objects.
+- Available Enpoints:
+   - **Register** - `http://localhost:9000/register`
+      - Body (data in JSON)
+         ```json
+            {
+               "first_name": "John",
+               "last_name": "Doe",
+               "email": "jd@gmail.com",
+               "password": "newpassword"
+            }
+         ```
+      - Returns User instance (data in JSON)
+   - **Login** - `http://localhost:9000/login`
+      - Body (data in JSON)
+         ```json
+         {
+            "email": "jd@gmail.com",
+            "password": "newpassword"
+         }
+         ```
+      - Returns JWT token
+   - **Fetch All Users** - `http://localhost:9000/users`
+      - Returns List of Users
+   - **Fetch Current Logged In User** - `http://localhost:9000/users/me`
+      - Returns User instance (data in JSON)
+   - **Fetch Networks of a User** - `http://localhost:9000/users/:user_id/networks`
+      - Params - `user_id`
+      - Returns a List of Networks
+   - **Fetch Transactions of a User** - `http://localhost:9000/users/:user_id/transactions`
+      - Params - `user_id`
+      - Returns a List of Transactions
+   - **Create Network** - `http://localhost:9000/networks/create`
+      - Body (data in JSON)
+         ```json
+         {
+            "network_name": "Test Network x",
+            "users": [2, 3],
+            "transactions": []
+         }
+         ```
+      - Returns Network instance (data in JSON)
+   - **Delete a Network** - `http://localhost:9000/networks/:network_pk/delete`
+      - Params - `network_id`
+   - **Add Users to Network** - `http://localhost:9000/networks/:network_id/add-users`
+      - Params - `network_id`
+      - Body (data in JSON)
+         ```json
+         {
+            "network_name": "Test Network x",
+            "users": [2, 3],
+            "transactions": []
+         }
+         ```
+      - Returns Network instance (data in JSON)
+   - **Fetch Users in a Network** - `http://localhost:9000/networks/:network_id/users`
+      - Params - `network_id`
+      - Returns Network instance with Users key (data in JSON)
+   - **Fetch Transactions in a Network** - `http://localhost:9000/networks/:network_id/transactions`
+      - Params - `network_id`
+      - Returns a List of Transactions
+   - **Create Item** - `http://localhost:9000/items/create`
+      - Body (data in JSON)
+         ```json
+         {
+            "item_name": "Test Item x",
+            "amount": 500
+         }
+         ```
+      - Returns Item instance (data in JSON)
+   - **Update Item** - `http://localhost:9000/items/:item_id/update`
+      - Param - `item_id`
+      - Body (data in JSON)
+         ```json
+         {
+            "item_name": "Test Item y",
+            "amount": 200
+         }
+         ```
+      - Returns Item instance (data in JSON)
+   - **Create a Transaction** - `http://localhost:9000/transactions/create`
+      - Body (data in JSON)
+         ```json
+         {
+            "transaction_name": "Test Transaction X",
+            "sender": 1,
+            "receiver": 2,
+            "network": 1,
+            "resolved": false,
+            "items": [1]
+         }
+         ```
+      - Returns Transaction instance (data in JSON)
+
+   - **Update a Transaction** - `http://localhost:9000/transactions/:transaction_id/update`
+      - Params - `transaction_id`
+      - Body (data in JSON)
+         ```json
+         {
+            "resolved": true
+         }
+         ```
+      - Returns Transaction instance (data in JSON)
+   - **Add Items in Transaction** - `http://localhost:9000/transactions/:transaction_id/add-items`
+      - Params - `transaction_id`
+      - Body (data in JSON)
+         ```json
+         {
+            "items": [1, 2, 3]
+         }
+         ```
+      - Returns Transaction instance (data in JSON)
+   - **Fetch Items in Transaction** - `http://localhost:9000/transactions/:transaction_id/items`
+      - Params - `transaction_id`
+      - Returns a List of Items
 
 **Frontend** (todo)
 - Tech Stack
