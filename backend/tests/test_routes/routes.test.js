@@ -7,16 +7,16 @@ import app from '../../server/app';
  */
 
 let testDataX = {
-    first_name: 'Lyka Mae',
-    last_name: 'Tagalog',
-    email: 'lkm@gmail.com',
+    first_name: 'John',
+    last_name: 'Doe',
+    email: 'jd@gmail.com',
     password: 'newpassword'
 };
 
 let testDataY = {
-    first_name: 'John Caesar',
-    last_name: 'Patac',
-    email: 'jcp@gmail.com',
+    first_name: 'Foo',
+    last_name: 'Bar',
+    email: 'fb@gmail.com',
     password: 'newpassword'
 };
 

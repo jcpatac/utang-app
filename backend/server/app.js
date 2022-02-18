@@ -12,8 +12,8 @@ import cookieParser from 'cookie-parser';
 import itemRouter from './routes/item';
 import usersRouter from './routes/users';
 import networkRouter from './routes/network';
-import indexRouter from './routes/authentication';
 import transactionRouter from './routes/transaction';
+import authenticationRouter from './routes/authentication';
 
 let app = express();
 
@@ -24,7 +24,10 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(join(__dirname, '../public')));
 
-// middleware
+/**
+ * Simple Middleware
+ * TODO: move to one module
+ */
 const authenticate = () => {
     return (req, res, next) => {
         try {
@@ -40,7 +43,10 @@ const authenticate = () => {
     }
 }
 
-app.use('/', indexRouter);
+/**
+ * TODO: move to one module
+ */
+app.use('/', authenticationRouter);
 app.use('/items', authenticate(), itemRouter);
 app.use('/users', authenticate(), usersRouter);
 app.use('/networks', authenticate(), networkRouter);

@@ -9,14 +9,14 @@
   "test": {
     "username": "root",
     "password": "password",
-    "database": "database_development",
+    "database": "database_testing",
     "host": "127.0.0.1",
     "dialect": "sqlite"
   },
   "production": {
     "username": "root",
     "password": "password",
-    "database": "database_development",
+    "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "sqlite"
   }
